@@ -14,6 +14,3 @@ print ("Hello from PyCharm!!! 5")
 print ("Hello from PyCharm!!! 6")
 print ("Hello from PyCharm!!! 7")
 print ("Hello from PyCharm!!! 8")
-
-print ("Hello from PyCharm!!! jkjkjkjk")
-
