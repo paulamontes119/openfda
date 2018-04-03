@@ -9,10 +9,10 @@ MAX_OPEN_REQUESTS = 5
 def process_client(clientsocket):
 	print(clientsocket)
 	print(clientsocket.recv(1024))
-    with open("First web page.html", "r") as f:
-        pauli = f.read()
-        web_contents = pauli
-    web_headers = "HTTP/1.1 200"
+	with open("First-web-page.html", "r") as f:
+		pauli = f.read()
+	web_contents = pauli
+	web_headers = "HTTP/1.1 200"
 	web_headers += "\n" + "Content-Type: text/html"
 	web_headers += "\n" + "Content-Length: %i" % len(str.encode(web_contents))
 	clientsocket.send(str.encode(web_headers + "\n\n" + web_contents))
