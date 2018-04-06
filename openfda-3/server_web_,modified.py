@@ -72,6 +72,5 @@ try:
 		# now do something with the clientsocket
 		# in this case, we'll pretend this is a non threaded server
 		process_client(clientsocket)
-
 except socket.error:
 	print("Problemas using port %i. Do you have permission?" % PORT)
