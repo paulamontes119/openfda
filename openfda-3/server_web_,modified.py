@@ -2,12 +2,11 @@
 
 
 import socket
+import http.client
+import json
 
 PORT = 8092
 MAX_OPEN_REQUESTS = 5
-
-import http.client
-import json
 
 def process_client(clientsocket):
 
@@ -24,13 +23,12 @@ def process_client(clientsocket):
 
 	my_list=[]
 	a = 0
-	start_list = "<ol>" + "\n"
-	end_list = "<\ol>"
+	start_list = "<head>" + "THIS IS THE LIST OF THE DRUGS' ID" + "</head>" "<ol>" + "\n"
 
 	while a < 10:
 		if 'active_ingredient' in repos['results'][a]:
 			a += 1
-			my_list.append(repos['results'][a]['active_ingredient'][0])
+			my_list.append(repos['results'][a]['id'])
 		else:
 			a += 1
 			my_list.append("This index does't correspond to any drug")
@@ -38,11 +36,12 @@ def process_client(clientsocket):
 	with open("drugs.html", "w") as f:
 		f.write(start_list)
 		for element in my_list:
-			list_elements = "<\t>" + "<li>" + element + "<\li>"
+			list_elements = "<t>" + "<li>" + element
 			f.write(list_elements)
-		f.write(end_list)
-	with open("html_drugs.html", "r") as f:
+
+	with open("drugs.html", "r") as f:
 		pauli = f.read()
+
 	web_contents = pauli
 	web_headers = "HTTP/1.1 200"
 	web_headers += "\n" + "Content-Type: text/html"
@@ -51,7 +50,7 @@ def process_client(clientsocket):
 	clientsocket.close()
 
 	print(clientsocket)
-	print(clientsockect.recv(1024))
+	print(clientsocket.recv(1024))
 
 
 # create an INET, STREAMing socket
@@ -59,7 +58,7 @@ serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # bind the socket to a public host, and a well-known port
 hostname = socket.gethostname()
 # Let's use better the local interface name
-hostname = "10.10.106.190"
+hostname = "10.10.105.137"
 try:
 	serversocket.bind((hostname, PORT))
 	# become a server socket

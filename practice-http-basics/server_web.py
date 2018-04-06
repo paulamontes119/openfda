@@ -9,9 +9,9 @@ MAX_OPEN_REQUESTS = 5
 def process_client(clientsocket):
 	print(clientsocket)
 	print(clientsocket.recv(1024))
-    with open("html_file2.html", "r") as f:
-        pauli = f.read()
-        web_contents = pauli
+	with open("html_file2.html", "r") as f:
+		pauli = f.read()
+	web_contents = pauli
     web_headers = "HTTP/1.1 200"
 	web_headers += "\n" + "Content-Type: text/html"
 	web_headers += "\n" + "Content-Length: %i" % len(str.encode(web_contents))
@@ -24,7 +24,7 @@ serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # bind the socket to a public host, and a well-known port
 hostname = socket.gethostname()
 # Let's use better the local interface name
-hostname = "10.10.106.190"
+hostname = "10.10.105.137"
 try:
 	serversocket.bind((hostname, PORT))
 	# become a server socket
