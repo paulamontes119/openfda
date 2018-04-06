@@ -22,6 +22,9 @@ def process_client(clientsocket):
 
 	repos = json.loads(repos_raw)
 
+	print(clientsocket)
+	print(clientsockect.recv(1024))
+
     with open("First-web-page.html", "r") as f:
         pauli = f.read()
     web_contents = pauli
