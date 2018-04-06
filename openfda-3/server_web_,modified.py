@@ -25,7 +25,7 @@ def process_client(clientsocket):
 	print(clientsocket)
 	print(clientsockect.recv(1024))
 
-    with open("First-web-page.html", "r") as f:
+    with open("html_drugs.html", "r") as f:
         pauli = f.read()
     web_contents = pauli
     web_headers = "HTTP/1.1 200"
