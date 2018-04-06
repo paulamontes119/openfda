@@ -22,17 +22,36 @@ def process_client(clientsocket):
 
 	repos = json.loads(repos_raw)
 
-	print(clientsocket)
-	print(clientsockect.recv(1024))
+	my_list=[]
+	a = 0
+	start_list = "<ol>" + "\n"
+	end_list = "<\ol>"
 
-    with open("html_drugs.html", "r") as f:
-        pauli = f.read()
-    web_contents = pauli
-    web_headers = "HTTP/1.1 200"
+	while a < 10:
+		if 'active_ingredient' in repos['results'][a]:
+			a += 1
+			my_list.append(repos['results'][a]['active_ingredient'][0])
+		else:
+			a += 1
+			my_list.append("This index does't correspond to any drug")
+
+	with open("drugs.html", "w") as f:
+		f.write(start_list)
+		for element in my_list:
+			list_elements = "<\t>" + "<li>" + element + "<\li>"
+			f.write(list_elements)
+		f.write(end_list)
+	with open("html_drugs.html", "r") as f:
+		pauli = f.read()
+	web_contents = pauli
+	web_headers = "HTTP/1.1 200"
 	web_headers += "\n" + "Content-Type: text/html"
 	web_headers += "\n" + "Content-Length: %i" % len(str.encode(web_contents))
 	clientsocket.send(str.encode(web_headers + "\n\n" + web_contents))
 	clientsocket.close()
+
+	print(clientsocket)
+	print(clientsockect.recv(1024))
 
 
 # create an INET, STREAMing socket
