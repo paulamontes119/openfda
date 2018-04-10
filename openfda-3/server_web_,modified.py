@@ -58,7 +58,7 @@ serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # bind the socket to a public host, and a well-known port
 hostname = socket.gethostname()
 # Let's use better the local interface name
-hostname = "10.10.105.137"
+hostname = "10.10.107.155"
 try:
 	serversocket.bind((hostname, PORT))
 	# become a server socket

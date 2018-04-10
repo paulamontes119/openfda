@@ -2,7 +2,6 @@ import http.server
 import socketserver
 
 PORT = 8000
-
 socketserver.TCPServer.allow_reuse_address = True
 
 # HTTPRequestHandler class
@@ -22,6 +21,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         # WRITE CONTENT AS UTF-8 DATA
         self.wfile.write(bytes(message, "utf8"))
+        print("DONE")
         return
 
 Handler = http.server.SimpleHTTPRequestHandler
