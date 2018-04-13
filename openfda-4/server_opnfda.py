@@ -1,8 +1,11 @@
+
+import http.client
 import http.server
 import json
 import socketserver
 
 PORT = 8000
+IP = "localhost"
 
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
