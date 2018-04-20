@@ -28,11 +28,10 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         if self.path == "/" :
             print("SEARCH: The client is searching a web")
             with open("search.html", 'r') as f:
-                mensaje = f.read()
-                self.wfile.write(bytes(json.dumps(mensaje), "utf8"))
-            #documents_sent("search.html")
+                message = f.read()
+                self.wfile.write(bytes(message, "utf8"))
 
-        elif 'Search' in self.path: # let´s try to find a drug and a limit entered by user
+        elif 'search' in self.path: # let´s try to find a drug and a limit entered by user
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/search?').split('&')    #We remove '/search?' and separate the rest at '&'
