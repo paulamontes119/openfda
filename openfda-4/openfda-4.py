@@ -2,9 +2,9 @@ import http.client
 import http.server
 import json
 import socketserver
-#socketserver.TCPServer.allow_reuse_address = True
+socketserver.TCPServer.allow_reuse_address = True
 
-PORT = 8000
+PORT = 8005
 IP = "localhost"
 
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -29,7 +29,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             print("SEARCH: The client is searching a web")
             with open("search.html", 'r') as f:
                 mensaje = f.read()
-                self.wfile.write(bytes(mensaje), "utf8")
+                self.wfile.write(bytes(json.dumps(mensaje), "utf8"))
             #documents_sent("search.html")
 
         elif 'Search' in self.path: # let´s try to find a drug and a limit entered by user
@@ -47,9 +47,10 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             r1 = conn.getresponse()
             print(r1.status, r1.reason)
             repos_raw = r1.read().decode("utf-8")
+
             conn.close()
             repos = json.loads(repos_raw)
-            self.wfile.write(bytes(str(repos), "utf8"))
+            self.wfile.write(bytes(json.dumps(repos), "utf8"))
         return
 
 #Handler = http.server.SimpleHTTPRequestHandler
