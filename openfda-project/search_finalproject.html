@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<form lang="en">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Search OpenFDA</title>
 </head>
-<body>
-<form style="background-color: pink">
+<body style="background-color: #87CEFA">
     <h1>Search OpenFDA Application</h1>
-<form action = "searchDrug">
-    Search drug <input name="active_ingredient" type="text"><br>
+<form action="searchDrug">
+    Active Ingredient: <input name="active_ingredient" type="text"><br>
+    Limit: <input name="Limit" type="text"><br>
     <input type="submit">
 </form>
-<form action = "searchCompany">
-    Search company <input name="company" type="text"><br>
+<form action="searchCompany">
+    Company: <input name="company" type="text"><br>
     <input type="submit">
+</form>
+<form action="listDrugs">
+    List of Drugs : <input type="submit">
+    Limit: <input name="Limit" type="text"><br>
+</form>
+<form action="listCompanies">
+    List of Companies : <input type="submit">
+</form>
+<form action="listWarnings">
+    List of Warnings : <input type="submit">
 </form>
 </body>
 </html>
