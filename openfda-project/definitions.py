@@ -5,7 +5,8 @@ import json
 
 # -- IP and the port of the server
 IP = "localhost"  # Localhost means "I": your local machine
-PORT = 8001
+PORT = 8000
+socketserver.TCPServer.allow_reuse_address = True
 
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -19,35 +20,58 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
 
-def search_drug(active_ingredient, limit):  # called to search for a drug and a limit
+        def active_ingredient():  # called to search for a drug and a limit
 
-    headers = {'User-Agent': 'http-client'}
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            info = self.path.strip('/search?').split('&')  # We remove '/search?' and separate the rest at '&'
+            drug = info[0].split('=')[1]
+            limit = info[1].split('=')[1]
+            print("The client has succesfully made a request!")
 
-    conn = http.client.HTTPSConnection("api.fda.gov")
-    print("The client has succesfully made a request!")
-    conn.request("GET", "/drug/label.json?search=active_ingredient:%s&limit=%s" % (active, limit), None, headers)
-    r1 = conn.getresponse()
-    print(r1.status, r1.reason)
-    repos_raw = r1.read().decode("utf-8")
-    conn.close()
+            url = "/drug/label.json?search=active_ingredient:" + drug + '&' + 'limit=' + limit
+            print(url)
 
-    repos = json.loads(repos_raw)
+            conn.request("GET", url, None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
 
-    with open ("data_drugs.html", "w"):
-        self.wfile.write(bytes('<html><head><h1>Search OpenFDA Application</h1><h2>Active Ingredient: "Here you have the information of the" %s "drugs"</h2><body style="background-color: #87CEFA" ></body> </html>' % (active_ingredient, limit), "utf8"))
-        for n in range(len(repos['results'])):
-            try:
-                for a in range(len(repos['results']["openfda"]["brand_name"])):
-                    try:
-                        drug = "<li>" + "The brand name of the drug that has been chosen: " + repos['results'][i]["openfda"]["brand_name"][0] + "</li>"
-                        self.wfile.write(bytes(drug, "utf8"))
-                    except KeyError:
-                        break
+            conn.close()
+            repos = json.loads(repos_raw)
 
-            except KeyError:
-                drug = "<li>" + "The brand name of this drug is not found" + "</li>"
-                self.wfile.write(bytes(drug, "utf8"))
-                continue
+
+
+            my_list = []
+            a = 0
+            start_list = "<head>" +  "THIS ARE THE BRAND NAMES OF THE DRUGS THAT YOU ARE LOOKING FOR: " + "</head>" "<ol>" + "\n"
+            nlimit = int(limit)
+
+            while a < nlimit:
+                try:
+                    my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
+                    a += 1
+                except KeyError:
+                    my_list.append("")
+                    a += 1
+
+            with open ("data_drugs.html", "w") as f:
+                f.write(start_list)
+                for element in my_list:
+                    list_elements = "<t>" + "<li>" + element
+                    f.write(list_elements)
+
+        if self.path == "/":
+            print("SEARCH: The client is searching a web")
+            with open("search.html", 'r') as f:
+                message = f.read()
+                self.wfile.write(bytes(message, "utf8"))
+        elif 'active' in self.path:  # let´s try to find a drug and a limit entered by user
+            active_ingredient()
+
+            with open("data_drugs.html", "r") as f:
+                pauli = f.read()
+                self.wfile.write(bytes(pauli,"utf8"))
 
 # Handler = http.server.SimpleHTTPRequestHandler
 Handler = testHTTPRequestHandler
