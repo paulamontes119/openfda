@@ -44,7 +44,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" +  "THIS ARE THE BRAND NAMES OF THE DRUGS THAT YOU ARE LOOKING FOR: " + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "THIS ARE THE BRAND NAMES OF THE DRUGS THAT YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
