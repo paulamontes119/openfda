@@ -214,14 +214,14 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             with open("search.html", 'r') as f:
                 message = f.read()
                 self.wfile.write(bytes(message, "utf8"))
-        elif 'active' in self.path:
+        elif 'searchDrug' in self.path:
             active_ingredient()
 
             with open("data_drugs.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli,"utf8"))
 
-        elif 'Company' in self.path:
+        elif 'searchCompany' in self.path:
             manufacturer_name()
 
             with open("data_drugs.html", "r") as f:
