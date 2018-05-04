@@ -32,7 +32,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     limit = "10"
             else:
                 limit = "10"
-            print("The client has succesfully made a request!")
+            print("The client has successfully made a request!")
 
             url = "/drug/label.json?search=active_ingredient:" + drug + '&' + 'limit=' + limit
             print(url)
