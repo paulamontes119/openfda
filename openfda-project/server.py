@@ -46,7 +46,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" + "<h2>" + "THESE ARE THE BRAND NAMES OF THE DRUGS THAT YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "These are the brand names of the drugs that you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -55,7 +55,9 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     a += 1
                 except:
                     my_list.append("Not known")
+                    print("Drugs with this active ingredient are not found")
                     a += 1
+
             with open ("data_drugs.html", "w") as f:
                 f.write(start_list)
                 for element in my_list:
@@ -75,7 +77,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     limit = "10"
             else:
                 limit = "10"
-            print("The client has succesfully made a request!")
+            print("The client has successfully made a request!")
 
             url = "/drug/label.json?search=openfda.manufacturer_name:" + manufacturer_name + '&' + 'limit=' + limit
             print(url)
