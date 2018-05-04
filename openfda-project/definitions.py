@@ -26,7 +26,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/search?').split('&')  # We remove '/search?' and separate the rest at '&'
             drug = info[0].split('=')[1]
-            limit = info[1].split('=')[1]
+            if "limit" in self.path:
+                limit = info[1].split('=')[1]
+                if limit == "":
+                    limit = "10"
+            else:
+                limit = "10"
             print("The client has succesfully made a request!")
 
             url = "/drug/label.json?search=active_ingredient:" + drug + '&' + 'limit=' + limit
@@ -48,15 +53,15 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
                     a += 1
-                except KeyError:
+                except:
                     my_list.append("Not known")
                     a += 1
-
             with open ("data_drugs.html", "w") as f:
                 f.write(start_list)
                 for element in my_list:
                     list_elements = "<t>" + "<li>" + element
                     f.write(list_elements)
+
 
         def manufacturer_name():
 
@@ -64,7 +69,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/search?').split('&')  # We remove '/search?' and separate the rest at '&'
             manufacturer_name = info[0].split('=')[1]
-            limit = info[1].split('=')[1]
+            if "limit" in self.path:
+                limit = info[1].split('=')[1]
+                if limit == "":
+                    limit = "10"
+            else:
+                limit = "10"
             print("The client has succesfully made a request!")
 
             url = "/drug/label.json?search=openfda.manufacturer_name:" + manufacturer_name + '&' + 'limit=' + limit
@@ -86,7 +96,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
                     a += 1
-                except KeyError:
+                except:
                     my_list.append("Not known")
                     a += 1
 
@@ -160,7 +170,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
                     a += 1
-                except KeyError:
+                except:
                     my_list.append("Not known")
                     a += 1
 
@@ -189,23 +199,34 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             repos = json.loads(repos_raw)
 
             my_list = []
+            warnings = []
             a = 0
+            b = 0
             start_list = "<head>" + "<h2>" + "THIS IS THE LIST OF ALL MANUFACTURERS YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
                 try:
                     my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
-                    my_list.append(repos['results'][a]['warnings'][0])
                     a += 1
-                except KeyError:
+                except:
                     my_list.append("Not known")
                     a += 1
 
+            while b < nlimit:
+                try:
+                    warnings.append(repos['results'][a]['warnings'][0])
+                    b += 1
+                except:
+                    warnings.append("Not known")
+                    b += 1
+
             with open("warnings_list.html", "w") as f:
                 f.write(start_list)
-                for element in my_list:
-                    list_elements = "<t>" + "<li>" + element
+                i = 0
+
+                while i < nlimit:
+                    list_elements = "<t>" + "<li>" + "The warnings for the drug:" + my_list[i] + "is:" + warnings[i]
                     f.write(list_elements)
 
 
@@ -217,7 +238,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         elif 'searchDrug' in self.path:
             active_ingredient()
 
-            with open("manufacturer_name.html", "r") as f:
+            with open("data_drugs.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli,"utf8"))
 
