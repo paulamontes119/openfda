@@ -231,7 +231,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 i = 0
 
                 while i < nlimit:
-                    list_elements = "<t>" + "<li>" + "The warnings for the drug:" + my_list[i] + "is:" + warnings[i]
+                    list_elements = "<t>" + "<li>" + "The warnings for the drug " + my_list[i] + " are " + warnings[i]
                     f.write(list_elements)
                     i += 1
 
