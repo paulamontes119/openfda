@@ -91,7 +91,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" + "<h2>" + "THIS ARE THE MANUFACTURE NAMES' OF THE DRUGS THAT YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "These are the manufacturer names'of the drugs that you are loking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -100,6 +100,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     a += 1
                 except:
                     my_list.append("Not known")
+                    print("Drugs produced by this manufacturer are not found")
                     a += 1
 
             with open("manufacturer_name.html", "w") as f:
@@ -114,7 +115,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/listDrugs?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit = info[1]
-            print("The client has succesfully made a request!")
+            print("The client has successfully made a request!")
 
             url = "/drug/label.json?limit=" + limit
             print(url)
@@ -128,7 +129,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" + "<h2>" + "THIS IS THE LIST OF ALL DRUGS YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "This is the list of all drugs you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -137,6 +138,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     a += 1
                 except KeyError:
                     my_list.append("Not known")
+                    print("This drug doesn't exist in this list")
                     a += 1
 
             with open("drugs_list.html", "w") as f:
@@ -151,7 +153,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/listCompanies?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit = info[1]
-            print("The client has succesfully made a request!")
+            print("The client has successfully made a request!")
 
             url = "/drug/label.json?limit=" + limit
             print(url)
@@ -165,7 +167,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" + "<h2>" + "THIS IS THE LIST OF ALL MANUFACTURERS YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "This is the list of all manufacturers you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -174,6 +176,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     a += 1
                 except:
                     my_list.append("Not known")
+                    print("This drug doesn't exist in this list")
                     a += 1
 
             with open("manufacturers_list.html", "w") as f:
@@ -188,7 +191,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/listWarnings?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit = info[1]
-            print("The client has succesfully made a request!")
+            print("The client has successfully made a request!")
 
             url = "/drug/label.json?limit=" + limit
             print(url)
@@ -204,7 +207,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             warnings = []
             a = 0
             b = 0
-            start_list = "<head>" + "<h2>" + "THIS IS THE LIST OF ALL MANUFACTURERS YOU ARE LOOKING FOR:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "This is the list of all warnings of the drugs you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -230,6 +233,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 while i < nlimit:
                     list_elements = "<t>" + "<li>" + "The warnings for the drug:" + my_list[i] + "is:" + warnings[i]
                     f.write(list_elements)
+                    i += 1
 
 
         if self.path == "/":
