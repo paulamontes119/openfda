@@ -221,21 +221,28 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 pauli = f.read()
                 self.wfile.write(bytes(pauli,"utf8"))
 
-        elif 'manufacturer' in self.path:  # let´s try to find a drug and a limit entered by user
+        elif 'Company' in self.path:  # let´s try to find a drug and a limit entered by user
             manufacturer_name()
 
             with open("data_drugs.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
 
-        elif 'druglist' in self.path:  # let´s try to find a drug and a limit entered by user
+        elif 'listDrugs' in self.path:  # let´s try to find a drug and a limit entered by user
             list_drugs()
 
             with open("data_drugs.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
 
-        elif 'manufacturerlist' in self.path:  # let´s try to find a drug and a limit entered by user
+        elif 'listCompanies' in self.path:  # let´s try to find a drug and a limit entered by user
+            list_manufacturers()
+
+            with open("data_drugs.html", "r") as f:
+                pauli = f.read()
+                self.wfile.write(bytes(pauli, "utf8"))
+
+        elif 'listWarnings' in self.path:  # let´s try to find a drug and a limit entered by user
             list_manufacturers()
 
             with open("data_drugs.html", "r") as f:
