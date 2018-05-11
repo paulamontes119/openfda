@@ -86,7 +86,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     f.write(list_elements)
 
 
-        def manufacturer_name():
+        def manufacturer_name():   # We use this definition to search for a manufacturer and a limit
 
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
@@ -112,7 +112,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             my_list = []
             a = 0
-            start_list = "<head>" + "<h2>" + "These are the manufacturer names'of the drugs that you are loking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
+            start_list = "<head>" + "<h2>" + "These are the manufacturer names'of the drugs that you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
             nlimit = int(limit)
 
             while a < nlimit:
@@ -131,7 +131,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     f.write(list_elements)
 
 
-        def list_drugs():
+        def list_drugs():   # We use this definition to obatin the default list of drugs
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('label.json?').split('=')
