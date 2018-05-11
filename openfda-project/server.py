@@ -172,7 +172,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def list_manufacturers():   # We use this definition to obtain a default manufacturer
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            info = self.path.strip('/listCompanies?').split('=')  # We remove '/search?' and separate the rest at '&'
+            info = self.path.strip('label.json?').split('=')
             limit = info[1]
             print("The client has successfully made a request!")
 
@@ -193,11 +193,11 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             while a < nlimit:
                 try:
-                    my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
+                    my_list.append(repos['results'][a]["openfda"]['manufacturer_name'][0])
                     a += 1
                 except:
                     my_list.append("Not known")
-                    print("This drug doesn't exist in this list")
+                    print("This manufacturer doesn't exist in this list")
                     a += 1
 
             with open("manufacturers_list.html", "w") as f:
