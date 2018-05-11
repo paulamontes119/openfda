@@ -41,7 +41,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
 
-        def active_ingredient():  # called to search for a drug and a limit
+        def active_ingredient():  # We use this definition to search for a drug and a limit
 
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
