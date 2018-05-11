@@ -134,7 +134,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def list_drugs():
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            info = self.path.strip('/listDrugs?').split('=')  # We remove '/search?' and separate the rest at '&'
+            info = self.path.strip('label.json?').split('=')
             limit = info[1]
             print("The client has successfully made a request!")
 
@@ -157,7 +157,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     my_list.append(repos['results'][a]["openfda"]['brand_name'][0])
                     a += 1
-                except KeyError:
+                except:
                     my_list.append("Not known")
                     print("This drug doesn't exist in this list")
                     a += 1
