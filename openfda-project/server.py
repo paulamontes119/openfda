@@ -290,17 +290,36 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         elif 'listCompanies' in self.path:
             list_manufacturers()
-
             with open("manufacturers_list.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
 
         elif 'listWarnings' in self.path:
             list_warnings()
-
             with open("warnings_list.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
+
+        elif 'secret' in self.path:
+            with open("secret.html", "r") as f:
+                pauli = f.read()
+                self.wfile.write(bytes(pauli, "utf8"))
+
+        elif 'redirect' in self.path:
+            print("The client wants to go back to the initial web page")
+            with open("search.html", 'r') as f:
+                mensaje = f.read()
+                self.wfile.write(bytes(mensaje, "utf8"))
+
+        else:
+            print("ERROR")
+            print("Not found")
+            with open("error.html", "r") as f:
+                message = f.read()
+                self.wfile.write(bytes(message, "utf8"))
+
+
+        return
 
 
 # Handler = http.server.SimpleHTTPRequestHandler
