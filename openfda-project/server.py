@@ -258,27 +258,32 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
         if self.path == "/":
-            print("SEARCH: The client is searching a web")
-            with open("search.html", 'r') as f:
-                message = f.read()
-                self.wfile.write(bytes(message, "utf8"))
+            try:
+                print("SEARCH: The client is searching a web")
+                with open("search.html", 'r') as f:
+                    message = f.read()
+                    self.wfile.write(bytes(message, "utf8"))
+            except KeyError:
+                print("ERROR")
+                print("Not found")
+                with open("error.html", "r") as f:
+                    message = f.read()
+                    self.wfile.write(bytes(message, "utf8"))
+
         elif 'searchDrug' in self.path:
             active_ingredient()
-
             with open("data_drugs.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli,"utf8"))
 
         elif 'searchCompany' in self.path:
             manufacturer_name()
-
             with open("manufacturer_name.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
 
         elif 'listDrugs' in self.path:
             list_drugs()
-
             with open("drugs_list.html", "r") as f:
                 pauli = f.read()
                 self.wfile.write(bytes(pauli, "utf8"))
