@@ -210,7 +210,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def list_warnings():   # We use this definition to obtain a default list of the grugs' warnings
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            info = self.path.strip('/listWarnings?').split('=')  # We remove '/search?' and separate the rest at '&'
+            info = self.path.strip('label.json?').split('=')
             limit = info[1]
             print("The client has successfully made a request!")
 
