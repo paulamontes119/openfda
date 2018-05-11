@@ -26,11 +26,11 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(status_code)
 
-        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
+        if self.path == "/" or 'searchDrug' in self.path or 'searchCompany' in self.path or 'listDrugs' in self.path or 'listCompanies' in self.path or 'listWarnings' in self.path:
             self.send_header('Content-type', 'text/html')
-        elif 'redirect' in path:
+        elif 'redirect' in self.path:
             self.send_header('Location', 'http://localhost:8000/')
-        elif 'secret' in path:
+        elif 'secret' in self.path:
             self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
 
 
