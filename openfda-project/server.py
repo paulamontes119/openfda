@@ -13,6 +13,27 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
 
+        #We use this step in order to change all the different status codes for all the options that exist
+
+        if self.path == "/" or 'searchDrug' in self.path or 'searchCompany' in self.path or 'listDrugs' in self.path or 'listCompanies' in self.path or 'listWarnings' in self.path:
+            status_code = 200
+        elif 'redirect' in self.path:
+            status_code = 302
+        elif 'secret' in self.path:
+            status_code = 401
+        else:
+            status_code = 404
+
+        self.send_response(status_code)
+
+        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
+            self.send_header('Content-type', 'text/html')
+        elif 'redirect' in path:
+            self.send_header('Location', 'http://localhost:8000/')
+        elif 'secret' in path:
+            self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
+
+
         # Send response status code
         self.send_response(200)
         # Send headers
