@@ -64,7 +64,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             my_list = []
             a = 0
             start_list = "<head>" + "<h2>" + "These are the brand names of the drugs that you are looking for:" + '<body style="background-color: #ff99bb">' + "</h2>" + "</head>" "<ol>" + "\n"
-            nlimit = int(limit)
+            nlimit = int(limit)   # We must convert the limit into an integer
 
             while a < nlimit:
                 try:
