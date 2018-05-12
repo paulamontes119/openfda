@@ -13,31 +13,27 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
 
-        #We use this step in order to change all the different status codes for all the options that exist
+        path = self.path   #We use this step in order to change all the different status codes for all the options that exist
 
-        if self.path == "/" or 'searchDrug' in self.path or 'searchCompany' in self.path or 'listDrugs' in self.path or 'listCompanies' in self.path or 'listWarnings' in self.path:
+        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
             status_code = 200
-        elif 'redirect' in self.path:
+        elif 'redirect' in path:
             status_code = 302
-        elif 'secret' in self.path:
+        elif 'secret' in path:
             status_code = 401
         else:
             status_code = 404
 
         self.send_response(status_code)
 
-        if self.path == "/" or 'searchDrug' in self.path or 'searchCompany' in self.path or 'listDrugs' in self.path or 'listCompanies' in self.path or 'listWarnings' in self.path:
+        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
             self.send_header('Content-type', 'text/html')
-        elif 'redirect' in self.path:
+        elif 'redirect' in path:
             self.send_header('Location', 'http://localhost:8000/')
-        elif 'secret' in self.path:
+        elif 'secret' in path:
             self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
 
 
-        # Send response status code
-        self.send_response(200)
-        # Send headers
-        self.send_header('Content-type', 'text/html')
         self.end_headers()
 
 
@@ -47,7 +43,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPSConnection("api.fda.gov")
             info = self.path.strip('/search?').split('&')  # We remove '/search?' and separate the rest at '&'
             drug = info[0].split('=')[1]
-            if "limit" in self.path:
+            if "limit" in self.path:   # The default value of limit will be 10
                 limit = info[1].split('=')[1]
                 if limit == "":
                     limit = "10"
