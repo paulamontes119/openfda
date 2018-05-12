@@ -72,7 +72,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     a += 1
                 except:
                     my_list.append("Not known")
-                    print("Drugs with this active ingredient are not found")
+                    print("This drug doesn't contain this active ingredient")
                     a += 1
 
             with open ("data_drugs.html", "w") as f:
