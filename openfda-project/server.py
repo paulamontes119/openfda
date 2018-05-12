@@ -237,7 +237,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             while b < nlimit:
                 try:
-                    warnings.append(repos['results'][a]['warnings'][0])
+                    warnings.append(repos['results'][b]['warnings'][0])
                     b += 1
                 except:
                     warnings.append("Not known")
